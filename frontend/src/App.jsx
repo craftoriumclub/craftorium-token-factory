@@ -8,8 +8,10 @@ import {
 import Big from "big.js";
 import ls from "local-storage";
 import { AppProvider } from "./context/AppContext";
+import "@near-wallet-selector/modal-ui/styles.css";
 import TokensPage from './pages/Tokens/Tokens';
 import NavBar from "./components/NavBar";
+
 
 const UploadResizeWidth = 96;
 const UploadResizeHeight = 96;
@@ -29,14 +31,14 @@ class App extends React.Component {
     this.lsKeyCachedTokens = this.lsKey + "cachedTokens";
     this.lsKeyCreateToken = this.lsKey + "createToken";
     this._updateRequiredDeposit = null;
-
+    
     this.handleChange = this.handleChange.bind(this);
     this.logOut = this.logOut.bind(this);
     this.onFilesChange = this.onFilesChange.bind(this);
     this.onFilesError = this.onFilesError.bind(this);
     this.createToken = this.createToken.bind(this);
     this.setState = this.setState.bind(this);
-    this.requestSignIn = this.requestSignIn.bind(this);
+    this.requestSignIn = this.logIn.bind(this)
 
     this.state = {
       connected: false,
@@ -70,7 +72,30 @@ class App extends React.Component {
       });
     });
   }
-
+  connectionConfig = {
+    networkId: "testnet",
+    keyStore: new nearAPI.keyStores.BrowserLocalStorageKeyStore(),
+    nodeUrl: "https://rpc.testnet.near.org",
+    walletUrl: "https://testnet.mynearwallet.com/",
+    helperUrl: "https://helper.testnet.near.org",
+    explorerUrl: "https://testnet.nearblocks.io",
+  };
+  walletConnection  = null;
+  
+  // connect to NEAR
+ nearConnection =  nearAPI.connect(this.connectionConfig).then((near) => { console.debug(near);  this.walletConnection = new nearAPI.WalletConnection(near);  });
+async logIn () {
+  if(!this.walletConnection) {
+    return;
+  }
+  // const walletConnection = new WalletConnection(nearConnection);
+this.walletConnection.requestSignIn({
+  contractId: "example-contract.testnet.REPLACE_ME",
+  methodNames: [], // optional
+  successUrl: "REPLACE_ME://.com/success", // optional redirect URL on success
+  failureUrl: "REPLACE_ME://.com/failure", // optional redirect URL on failure
+});
+}
   toggleDarkMode = () => {
     this.setState({ isDarkMode: !this.state.isDarkMode })
   }

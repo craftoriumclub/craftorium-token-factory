@@ -14,11 +14,11 @@ export const useWalletSelector = () => {
 
   // slim scan velvet demise country exchange cradle bacon panel claim bonus bundle
   setupWalletSelector({
-    network: "testnet",
+    network: "mainnet",
     modules: [setupNearWallet(), setupMyNearWallet()],
   }).then((walletSelector) => {
     setWalletModal(setupModal(walletSelector, {
-      contractId: "test.testnet",
+      contractId: "tkn.near",
     }));
     setWalletSelector(walletSelector);
   });

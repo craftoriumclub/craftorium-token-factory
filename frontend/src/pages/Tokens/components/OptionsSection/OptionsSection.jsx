@@ -1,7 +1,7 @@
 import Button from "../../../../components/elements/Button";
 import { OneNear } from "../../../../components/Tokens/Tokens";
 import Files from "react-files";
-import React, { useEffect } from "react";
+import React from "react";
 import Big from "big.js";
 import { useWalletSelector } from "../../../../hooks/useWalletSelector";
 
@@ -28,7 +28,7 @@ const OptionsSection = ({ handleChange, state, logOut,
 
     const { walletModal, walletSelector, isConnected } = useWalletSelector();
 
-   
+
 
     const isValidTokenId = (tokenId) => {
         tokenId = tokenId.toLowerCase();
@@ -95,14 +95,14 @@ const OptionsSection = ({ handleChange, state, logOut,
             <div className="alert alert-success" role="alert">
                 The token <b>{state.tokenId}</b> was successfully created!
             </div>
-            <div>
+            {/* <div>
                 <button
                     className="btn btn-success"
                     onClick={() => requestWhitelist(state.tokenId)}
                 >
                     Add <b>{state.tokenId}</b> to your NEAR Wallet
                 </button>
-            </div>
+            </div> */}
         </div>
     ) : state.signedIn ? (
         <div>

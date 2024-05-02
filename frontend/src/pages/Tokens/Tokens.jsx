@@ -36,7 +36,6 @@ const Tokens = ({
     const handlePage = (page) => {
         setCurrentPage(page);
     }
-    // require cheap student boy best interest purse tool creek service body length
 
     return (
         <AppConsumer>
